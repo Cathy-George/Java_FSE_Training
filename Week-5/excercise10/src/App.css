@@ -1,0 +1,59 @@
+body{
+
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#eef2f7;
+
+}
+
+.container{
+
+    display:flex;
+
+    justify-content:space-evenly;
+
+    align-items:flex-start;
+
+    margin-top:50px;
+
+}
+
+.card{
+
+    width:300px;
+
+    padding:20px;
+
+    border-right:4px solid green;
+
+}
+
+h1{
+
+    color:#222;
+
+}
+
+h2{
+
+    color:#333;
+
+}
+
+h3{
+
+    color:#444;
+
+}
+
+h4{
+
+    color:#666;
+
+}
+
+p{
+
+    color:#555;
+
+}

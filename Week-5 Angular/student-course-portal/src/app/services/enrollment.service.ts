@@ -1,61 +1,59 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Course } from '../models/course.model';
 import { CourseService } from './course.service';
 import { NotificationService } from './notification.service';
+import { Store } from '@ngrx/store';
+import * as EnrollmentActions from '../store/enrollment/enrollment.actions';
+import { selectEnrolledCourseIds } from '../store/enrollment/enrollment.selectors';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EnrollmentService {
-  private enrolledCourseIdsSubject = new BehaviorSubject<Set<number>>(new Set([2, 5]));
+  private store = inject(Store);
+  private courseService = inject(CourseService);
+  private notificationService = inject(NotificationService);
 
-  constructor(
-    private courseService: CourseService,
-    private notificationService: NotificationService
-  ) {
-    // Reactively update enrolled ids based on server courses catalog state
+  constructor() {
+    // Load initial enrollments from catalog
+    this.store.dispatch(EnrollmentActions.loadEnrollments());
+
+    // Sync state whenever the courses catalog is updated directly
     this.courseService.getCourses().subscribe(courses => {
-      const enrolledSet = new Set<number>(
-        courses.filter(c => c.enrolled).map(c => c.id)
-      );
-      const current = this.enrolledCourseIdsSubject.value;
-      const isDifferent = current.size !== enrolledSet.size || [...enrolledSet].some(id => !current.has(id));
-      if (isDifferent) {
-        this.enrolledCourseIdsSubject.next(enrolledSet);
-      }
+      const enrolledIds = courses.filter(c => c.enrolled).map(c => c.id);
+      this.store.dispatch(EnrollmentActions.loadEnrollmentsSuccess({ enrolledIds }));
     });
   }
 
   getEnrolledCourseIds(): Observable<Set<number>> {
-    return this.enrolledCourseIdsSubject.asObservable();
+    return this.store.select(selectEnrolledCourseIds).pipe(
+      map(ids => new Set(ids))
+    );
   }
 
   getEnrolledCreditsCount(): Observable<number> {
     return combineLatest([
       this.courseService.getCourses(),
-      this.enrolledCourseIdsSubject.asObservable()
+      this.store.select(selectEnrolledCourseIds)
     ]).pipe(
       map(([courses, enrolledIds]) => {
+        const idSet = new Set(enrolledIds);
         return courses
-          .filter(c => enrolledIds.has(c.id))
+          .filter(c => idSet.has(c.id))
           .reduce((sum, c) => sum + c.credits, 0);
       })
     );
   }
 
   enrollCourse(course: Course): void {
-    this.courseService.updateCourseEnrollment(course.id, true).subscribe({
-      next: () => this.notificationService.show(`Enrolled in ${course.code} successfully!`, 'success'),
-      error: () => this.notificationService.show(`Could not enroll in ${course.code}.`, 'warning')
-    });
+    this.store.dispatch(EnrollmentActions.enrollCourse({ courseId: course.id, courseCode: course.code }));
+    this.notificationService.show(`Enrolled in ${course.code} successfully!`, 'success');
   }
 
   unenrollCourse(course: Course): void {
-    this.courseService.updateCourseEnrollment(course.id, false).subscribe({
-      next: () => this.notificationService.show(`Unenrolled from ${course.code}.`, 'info'),
-      error: () => this.notificationService.show(`Could not unenroll from ${course.code}.`, 'warning')
-    });
+    this.store.dispatch(EnrollmentActions.unenrollCourse({ courseId: course.id, courseCode: course.code }));
+    this.notificationService.show(`Unenrolled from ${course.code}.`, 'info');
   }
 }

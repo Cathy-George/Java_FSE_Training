@@ -1,0 +1,27 @@
+<header class="header">
+  <div class="header-container">
+    <div class="logo">
+      <span class="logo-icon">🎓</span>
+      <span class="logo-text">Student Course Portal</span>
+    </div>
+    
+    <nav class="nav">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+        <span class="nav-icon">🏠</span> Home
+      </a>
+      <a routerLink="/courses" routerLinkActive="active" class="nav-link">
+        <span class="nav-icon">📚</span> Courses
+        <span *ngIf="enrolledCount > 0" class="badge" id="enrolledCountBadge">{{ enrolledCount }}</span>
+      </a>
+      <a routerLink="/profile" routerLinkActive="active" class="nav-link">
+        <span class="nav-icon">👤</span> Profile
+      </a>
+      <a *ngIf="isLoggedIn" (click)="logout()" class="nav-link" style="cursor: pointer;" id="headerLogoutBtn">
+        <span class="nav-icon">🔓</span> Log Out
+      </a>
+      <a *ngIf="!isLoggedIn" routerLink="/login" routerLinkActive="active" class="nav-link" id="headerLoginBtn">
+        <span class="nav-icon">🔒</span> Log In
+      </a>
+    </nav>
+  </div>
+</header>

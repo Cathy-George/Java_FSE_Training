@@ -1,0 +1,42 @@
+<div class="course-card" [appHighlight]="'rgba(99, 102, 241, 0.08)'" [ngClass]="{'enrolled': course.enrolled, 'not-enrolled': !course.enrolled}" [ngStyle]="{'box-shadow': course.enrolled ? '0 0 15px rgba(16, 185, 129, 0.15)' : 'none'}">
+  <div class="card-glow"></div>
+  <div class="card-header">
+    <div class="dept-info">
+      <span [ngSwitch]="course.department" class="dept-icon">
+        <span *ngSwitchCase="'Computer Science'">💻</span>
+        <span *ngSwitchCase="'Information Technology'">☁️</span>
+        <span *ngSwitchCase="'Design'">🎨</span>
+        <span *ngSwitchDefault>📚</span>
+      </span>
+      <span class="dept-badge" [class.highlighted]="highlightMatch(course.department)">{{ course.department }}</span>
+    </div>
+    <span class="course-code" [class.highlighted]="highlightMatch(course.code)">{{ course.code }}</span>
+  </div>
+  <h3 class="course-title" [class.highlighted]="highlightMatch(course.title)">{{ course.title }}</h3>
+  <p class="course-desc">{{ course.description }}</p>
+  <div class="course-meta">
+    <div class="meta-item">
+      <span class="meta-label">Instructor:</span>
+      <span class="meta-val" [class.highlighted]="highlightMatch(course.instructor)">{{ course.instructor }}</span>
+    </div>
+    <div class="meta-item credit-row">
+      <span class="meta-label">Credits:</span>
+      <div class="credits-control">
+        <button (click)="decreaseCredits()" [disabled]="course.credits <= 1" class="credit-btn">-</button>
+        <span class="meta-val credits-val">{{ course.credits | creditLabel }}</span>
+        <button (click)="increaseCredits()" class="credit-btn">+</button>
+      </div>
+    </div>
+  </div>
+  <div class="card-actions">
+    <a [routerLink]="['/courses', course.id]" class="details-btn" [attr.id]="'viewDetailsBtn-' + course.id">
+      Syllabus & Reviews
+    </a>
+    <button (click)="toggleEnrollment()" class="enroll-btn" [class.enrolled]="course.enrolled">
+      {{ course.enrolled ? 'Drop Course' : 'Enroll Now' }}
+    </button>
+    <button (click)="deleteCourse()" class="delete-btn" title="Remove course offering">
+      🗑️
+    </button>
+  </div>
+</div>

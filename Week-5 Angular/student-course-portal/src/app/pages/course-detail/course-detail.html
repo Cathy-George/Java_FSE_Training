@@ -1,0 +1,48 @@
+<div class="detail-container fade-in" *ngIf="course; else courseNotFound">
+  
+  <!-- Back link -->
+  <a routerLink="/courses" class="back-link">← Return to Courses</a>
+
+  <div class="course-detail-card">
+    <div class="course-meta-header">
+      <span class="course-badge">{{ course.code }}</span>
+      <span class="course-dept">{{ course.department }}</span>
+    </div>
+    
+    <h2 class="course-title">{{ course.title }}</h2>
+    
+    <div class="instructor-row">
+      <span class="instructor-avatar">👨‍🏫</span>
+      <div class="instructor-details">
+        <span class="instructor-label">Instructor</span>
+        <span class="instructor-name">{{ course.instructor }}</span>
+      </div>
+      <div class="credits-box">
+        <span class="credits-num">{{ course.credits }}</span>
+        <span class="credits-label">Credits</span>
+      </div>
+    </div>
+    
+    <p class="course-description">{{ course.description }}</p>
+  </div>
+
+  <!-- Inner tabs nested routing -->
+  <div class="tabs-container">
+    <div class="tabs-bar">
+      <a routerLink="./syllabus" routerLinkActive="active" class="tab-btn" id="syllabusTabBtn">Syllabus</a>
+      <a routerLink="./reviews" routerLinkActive="active" class="tab-btn" id="reviewsTabBtn">Student Reviews</a>
+    </div>
+    
+    <div class="tab-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+<ng-template #courseNotFound>
+  <div class="detail-container error-state">
+    <h2 class="error-heading">Course Coordinates Not Found</h2>
+    <p class="error-msg">The course parameters do not map to any active catalog entries.</p>
+    <a routerLink="/courses" class="btn-error-back">← Catalog Search</a>
+  </div>
+</ng-template>

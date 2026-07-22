@@ -1,0 +1,88 @@
+<div class="home-wrapper fade-in">
+  <section class="welcome-section">
+    <div class="welcome-badge">Dashboard</div>
+    <h1 class="welcome-title">Welcome to the Student Course Portal</h1>
+    <p class="welcome-desc">
+      Manage your academic journey with ease. View your student profile, explore available courses, enroll in new classes, and monitor your academic progress in real-time.
+    </p>
+  </section>
+
+  <section class="stats-section">
+    <h2 class="section-subtitle">Academic Overview</h2>
+    
+    <div class="stats-grid">
+      <div class="stat-card card-purple">
+        <div class="stat-header">
+          <span class="stat-icon">📚</span>
+          <span class="stat-label">Courses Available</span>
+        </div>
+        <div class="stat-value">12</div>
+        <div class="stat-footer">Across 4 departments</div>
+      </div>
+      
+      <div class="stat-card card-blue">
+        <div class="stat-header">
+          <span class="stat-icon">✅</span>
+          <span class="stat-label">Enrolled Courses</span>
+        </div>
+        <div class="stat-value">3</div>
+        <div class="stat-footer">Active this semester</div>
+      </div>
+      
+      <div class="stat-card card-teal">
+        <div class="stat-header">
+          <span class="stat-icon">📈</span>
+          <span class="stat-label">Cumulative GPA</span>
+        </div>
+        <div class="stat-value">3.8</div>
+        <div class="stat-footer">Top 10% of class</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quick-actions">
+    <h2 class="section-subtitle">Quick Access</h2>
+    <div class="action-grid">
+      <a routerLink="/courses" class="action-card">
+        <span class="action-icon">🔍</span>
+        <div class="action-info">
+          <h3>Browse Courses</h3>
+          <p>Find new courses, view schedules, and credits.</p>
+        </div>
+        <span class="action-arrow">→</span>
+      </a>
+
+      <a routerLink="/profile" class="action-card">
+        <span class="action-icon">👤</span>
+        <div class="action-info">
+          <h3>Student Profile</h3>
+          <p>Update personal info, view transcripts and grades.</p>
+        </div>
+        <span class="action-arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="quick-actions" style="margin-top: 2rem;">
+    <h2 class="section-subtitle">Departmental Filter Shortcuts (Query Params)</h2>
+    <div class="action-grid">
+      <a routerLink="/courses" [queryParams]="{ department: 'Computer Science' }" class="action-card" id="csFilterLink">
+        <span class="action-icon">💻</span>
+        <div class="action-info">
+          <h3>Computer Science</h3>
+          <p>Filter CS catalog details directly via query parameter filters.</p>
+        </div>
+        <span class="action-arrow">→</span>
+      </a>
+
+      <a routerLink="/courses" [queryParams]="{ department: 'Information Technology' }" class="action-card" id="itFilterLink">
+        <span class="action-icon">☁️</span>
+        <div class="action-info">
+          <h3>Information Technology</h3>
+          <p>Filter IT catalog details directly via query parameter filters.</p>
+        </div>
+        <span class="action-arrow">→</span>
+      </a>
+    </div>
+  </section>
+</div>

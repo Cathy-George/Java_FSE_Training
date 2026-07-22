@@ -1,0 +1,43 @@
+========================================================================
+STUDENT COURSE PORTAL - PROJECT CONFIGURATION & STRUCTURE EXPLANATIONS
+========================================================================
+
+1. angular.json
+   Purpose: The workspace configuration file that defines default settings for projects, paths, building, serving, testing, and other Angular CLI operations.
+
+2. tsconfig.json
+   Purpose: The root TypeScript configuration file specifying compiler options and path mappings applicable across the entire workspace/project.
+
+3. tsconfig.app.json
+   Purpose: The application-specific TypeScript configuration extending tsconfig.json, tailored specifically for compilation options of the browser application.
+
+4. package.json
+   Purpose: Defines the node project configuration, detailing metadata, scripts (start, build, test), and list of dependency packages (Angular and dev tools).
+
+5. src/main.ts
+   Purpose: The main entry point of the application that bootstraps the root component (AppModule or Standalone AppComponent) to run inside the browser.
+
+6. src/app/app.config.ts
+   Purpose: Configures application-wide providers (like routing, animations, and HTTP) for a modern standalone Angular application structure.
+
+7. src/app/app.component.ts
+   Purpose: The TypeScript logic class for the root component of the application, binding its template (app.html) and stylesheet (app.css) to the DOM.
+
+8. src/index.html
+   Purpose: The single main HTML file served by the web server that acts as the container where Angular dynamically renders the root application component inside <app-root>.
+
+========================================================================
+BUDGETS CONFIGURATION UNDER architect > build > configurations > production
+========================================================================
+Budgets are thresholds defined in angular.json that help keep the application bundle sizes under control by warning developers or failing the build when bundles exceed defined size limits.
+
+In our angular.json under production configuration:
+- "type": "initial", "maximumWarning": "500kB", "maximumError": "1MB"
+  Controls the size of the initial bundle (the assets required for the initial page load).
+  * maximumWarning: If the initial bundle exceeds 500kB, Angular CLI issues a warning during compile/build.
+  * maximumError: If the initial bundle exceeds 1MB, the build process fails with an error to prevent oversized deployment.
+
+- "type": "anyComponentStyle", "maximumWarning": "4kB", "maximumError": "8kB"
+  Controls the CSS stylesheet size for any individual component.
+  * maximumWarning: Issues a compile warning if a single component's CSS exceeds 4kB.
+  * maximumError: Fails the build if a single component's CSS exceeds 8kB, ensuring styles remain modular and small.

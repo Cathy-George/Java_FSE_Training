@@ -1,0 +1,75 @@
+{
+  "courses": [
+    {
+      "id": "1",
+      "title": "Introduction to Angular framework",
+      "code": "CS-301",
+      "instructor": "Dr. Sarah Connor",
+      "credits": 5,
+      "department": "Computer Science",
+      "enrolled": true,
+      "description": "Learn the fundamentals of Angular including components, directives, routing, data binding and form integration."
+    },
+    {
+      "id": "2",
+      "title": "Advanced Web Applications",
+      "code": "CS-402",
+      "instructor": "Prof. Alan Turing",
+      "credits": 4,
+      "department": "Computer Science",
+      "enrolled": true,
+      "description": "Deep dive into asynchronous programming, state management, HTTP communication, performance optimization and SSR."
+    },
+    {
+      "id": "3",
+      "title": "Database Management Systems",
+      "code": "CS-205",
+      "instructor": "Dr. Grace Hopper",
+      "credits": 5,
+      "department": "Information Technology",
+      "enrolled": false,
+      "description": "Explore relational database design, SQL querying, transaction management, indexing techniques and NoSQL alternatives."
+    },
+    {
+      "id": "4",
+      "title": "Human Computer Interaction",
+      "code": "DS-110",
+      "instructor": "Dr. Donald Norman",
+      "credits": 4,
+      "department": "Design",
+      "enrolled": false,
+      "description": "Introduction to user-centered design, prototyping, usability testing guidelines and interaction models."
+    },
+    {
+      "id": "5",
+      "title": "Cloud Architecture & DevOps",
+      "code": "IT-440",
+      "instructor": "Prof. Werner Vogels",
+      "credits": 4,
+      "department": "Information Technology",
+      "enrolled": true,
+      "description": "Analyze cloud deployment models, containerization with Docker, orchestration, CI/CD pipelines and microservices."
+    },
+    {
+      "id": "6",
+      "title": "Artificial Intelligence Basics",
+      "code": "CS-380",
+      "instructor": "Dr. John McCarthy",
+      "credits": 5,
+      "department": "Computer Science",
+      "enrolled": false,
+      "description": "Fundamental concepts in machine learning, search algorithms, neural networks and knowledge representation systems."
+    },
+    {
+      "title": "Advanced Angular",
+      "code": "CS-501",
+      "instructor": "Dr. Sarah Connor",
+      "credits": "4",
+      "department": "Computer Science",
+      "description": "Learn advanced Angular features, state management, custom directives and micro-frontends.",
+      "enrolled": false,
+      "id": "lypATifuO6s"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

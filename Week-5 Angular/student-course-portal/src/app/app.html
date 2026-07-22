@@ -1,0 +1,26 @@
+<!-- Global Loading Spinner Overlay -->
+<div class="loading-overlay" *ngIf="isLoading">
+  <div class="spinner-box">
+    <div class="spinner"></div>
+    <span class="loading-text">Loading Academic Data...</span>
+  </div>
+</div>
+
+<app-header></app-header>
+<main class="container">
+  <router-outlet></router-outlet>
+</main>
+
+<!-- Global Notification Toast Overlay -->
+<div class="notification-container">
+  <div *ngFor="let notification of activeNotifications" 
+       class="toast-alert fade-in" 
+       [class.success]="notification.type === 'success'"
+       [class.info]="notification.type === 'info'"
+       [class.warning]="notification.type === 'warning'">
+    <span class="toast-icon" *ngIf="notification.type === 'success'">✓</span>
+    <span class="toast-icon" *ngIf="notification.type === 'info'">ℹ</span>
+    <span class="toast-message">{{ notification.message }}</span>
+    <button (click)="dismissNotification(notification.id)" class="toast-close">×</button>
+  </div>
+</div>

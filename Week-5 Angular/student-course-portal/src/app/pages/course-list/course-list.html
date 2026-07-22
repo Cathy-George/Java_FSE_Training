@@ -1,0 +1,107 @@
+<div class="page-wrapper fade-in">
+  <div class="page-header">
+    <h1 class="page-title">Course Offerings</h1>
+    <p class="page-desc">Browse and search for courses available for registration this semester.</p>
+  </div>
+
+  <div class="controls-panel">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" [(ngModel)]="searchText" placeholder="Search by title, code, instructor, department..." class="search-input" />
+      <button *ngIf="searchText" (click)="searchText = ''" class="clear-search-btn">×</button>
+    </div>
+
+    <div class="filter-controls">
+      <label class="checkbox-container">
+        <input type="checkbox" [(ngModel)]="showEnrolledOnly" />
+        <span class="checkmark"></span>
+        Show Enrolled Only
+      </label>
+
+      <button (click)="incrementAllCredits()" class="action-btn">
+        ⚡ Bulk Credit Add (+1)
+      </button>
+
+      <button (click)="showAddForm = !showAddForm" class="action-btn-secondary" id="toggleAddCourseFormBtn">
+        {{ showAddForm ? '❌ Close Form' : '➕ Add New Course' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Add New Course Form Panel -->
+  <div class="add-course-panel fade-in" *ngIf="showAddForm">
+    <h2 class="panel-subtitle">Create New Course Offering</h2>
+    <form (submit)="addCourse(); $event.preventDefault();" #courseForm="ngForm" class="add-course-form">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="courseTitle">Course Title</label>
+          <input type="text" id="courseTitle" name="title" [(ngModel)]="newCourse.title" required minlength="5" placeholder="e.g. Algorithms & Data Structures" class="form-input" />
+        </div>
+        <div class="form-group">
+          <label for="courseCode">Course Code</label>
+          <input type="text" id="courseCode" name="code" [(ngModel)]="newCourse.code" required pattern="^[A-Z]{2,3}-[0-9]{3}$" placeholder="e.g. CS-201" class="form-input" />
+        </div>
+        <div class="form-group">
+          <label for="courseInstructor">Instructor</label>
+          <input type="text" id="courseInstructor" name="instructor" [(ngModel)]="newCourse.instructor" required placeholder="e.g. Prof. Alan Kay" class="form-input" />
+        </div>
+        <div class="form-group">
+          <label for="courseCredits">Credits</label>
+          <select id="courseCredits" name="credits" [(ngModel)]="newCourse.credits" class="form-input">
+            <option [value]="1">1 Credit</option>
+            <option [value]="2">2 Credits</option>
+            <option [value]="3">3 Credits</option>
+            <option [value]="4">4 Credits</option>
+            <option [value]="5">5 Credits</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="courseDept">Department</label>
+          <select id="courseDept" name="department" [(ngModel)]="newCourse.department" class="form-input">
+            <option value="Computer Science">Computer Science</option>
+            <option value="Information Technology">Information Technology</option>
+            <option value="Design">Design</option>
+          </select>
+        </div>
+        <div class="form-group full-width">
+          <label for="courseDesc">Description</label>
+          <textarea id="courseDesc" name="description" [(ngModel)]="newCourse.description" placeholder="Provide a brief syllabus description..." class="form-input form-textarea"></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" [disabled]="!courseForm.valid" class="submit-btn" id="submitNewCourseBtn">Create Offering</button>
+        <button type="button" (click)="showAddForm = false" class="cancel-btn">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="stats-overview">
+    <div class="stat-bubble">
+      <span class="bubble-label">Active Enrollments</span>
+      <span class="bubble-val">{{ enrolledCount }} Courses</span>
+    </div>
+    <div class="stat-bubble">
+      <span class="bubble-label">Total Selected Credits</span>
+      <span class="bubble-val">{{ totalCredits }} Credits</span>
+    </div>
+  </div>
+
+  <div *ngIf="filteredCourses.length > 0; else noResults" class="courses-grid">
+    <app-course-card 
+      *ngFor="let course of filteredCourses; trackBy: trackByCourseId"
+      [course]="course" 
+      [searchQuery]="searchText"
+      (enrollmentToggled)="onEnrollmentToggled($event)"
+      (creditsChanged)="onCreditsChanged($event)"
+      (courseDeleted)="deleteCourse($event)">
+    </app-course-card>
+  </div>
+
+  <ng-template #noResults>
+    <div class="placeholder-card no-results">
+      <span class="placeholder-icon">🔍</span>
+      <h2>No courses found</h2>
+      <p>Try adjusting your search terms or unchecking the enrollment filter.</p>
+    </div>
+  </ng-template>
+</div>
